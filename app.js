@@ -11,20 +11,46 @@ var app = express();
 
 
 //Setup some data structures and variables
+var elevators = [];
+
 
 //Define our elevator class
-function elevator(name, id, currentfloor, destinationfloor, numpassengers, carstatus){
+function elevator(name, id, capacity, currentfloor, pickupfloor, destinationfloor, numpassengers, status, tripcount){
     this.name = name; //name of the car
     this.id = id;//ID number of the car
     this.currentfloor = currentfloor; //current floor location of the car
+    this.pickupfloor = pickupfloor;
     this.destinationfloor = destinationfloor; //destination of the car
-    this.capacity = 8 //this is the default capacity of our elevator cars
+    this.capacity = capacity; //this is the default capacity of our elevator cars
     this.numpassengers = numpassengers; //number of current pasengers in the car
     this.lifetimetripcount = tripcount + 1; //total lifetime trips that the car has taken
     
     //choices are active, disabled, maintenance
     this.status = status;
 }
+
+
+//Initialize the data to start the API (this can also be done via the Express endpoint /initialize after this is up and listening)
+//this data details the elevator cars available
+var elevatordata = 
+[
+    {'name':'Old Car Number 1','id':'1','capacity':'10'}
+    ,{'name':'Car 2','id':'2','capacity':'8'}
+    ,{'name':'Car 3','id':'1','capacity':'8'}
+    ,{'name':'Express Car 4','id':'1','capacity':'12'}
+];
+
+elevatordata.forEach(element => {
+
+    //initialize the new row about to be pushed on to the 'elevators' array object
+    var someelevator = new elevator(element.name,element.id,element.capacity,0,-1,-1,-1,'active',0)
+
+    //push the new row onto the array
+    elevators.push(someelevator);
+
+}); //end of elevatordata foreach
+
+//end of Initialization
 
 
 //Define our floor class
@@ -54,6 +80,28 @@ function trip(ID,numberpassengers,caroriginfloor,pickupfloor,dropfloor){
 //This is the home endpoint for the API.
 app.get('/', function (req, res) {
     res.send('Welcome to Elevator API!');
+});
+
+//This is the initialization endpoint for the API.
+app.get('/initialize', function (req, res) {
+
+    elevatordata.forEach(element => {
+
+        //initialize the new row about to be pushed on to the 'elevators' array object
+        var someelevator = new elevator(element.name,element.id,element.capacity,0,-1,-1,-1,'active',0)
+
+        //push the new row onto the array
+        elevators.push(someelevator);
+
+    }); //end of elevatordata foreach
+
+    //send the relevant data as output
+    res.send(elevatordata);
+});
+
+//This is the status endpoint for the API.  Here you get the status of all the relevant data points
+app.get('/status', function (req, res) {
+    res.send(elevatordata);
 });
 
 //This is the single triprequest endpoint for the API.
