@@ -153,7 +153,6 @@ app.get('/bulktriprequest/:bulktripdataJSON', function (req, res) {
 });
 
 
-
 //This starts the express app listening on a specified port
 app.listen(3000, function () {
     console.log('Elevator API app listening on port 3000!');
