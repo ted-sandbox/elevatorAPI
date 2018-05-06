@@ -1,0 +1,22 @@
+{
+  "name": "elevatorapi",
+  "version": "1.0.0",
+  "description": "An Elevator simulator",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ted-sandbox/elevatorAPI.git"
+  },
+  "author": "Todd Edwards",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/ted-sandbox/elevatorAPI/issues"
+  },
+  "homepage": "https://github.com/ted-sandbox/elevatorAPI#readme",
+  "dependencies": {
+    "express": "^4.16.3"
+  }
+}
