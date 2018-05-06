@@ -5,14 +5,14 @@ console.log('Welcome to the Elevator API');
 //setup any includes from npm library
 var express = require('express');
 
-
 //setup the Express JS variable
 var app = express();
 
 
 //Setup some data structures and variables
 var elevators = [];
-
+var trips = [];
+var triprequests = [];
 
 //Define our elevator class
 function elevator(name, id, capacity, currentfloor, pickupfloor, destinationfloor, numpassengers, status, tripcount){
@@ -49,6 +49,14 @@ elevatordata.forEach(element => {
     elevators.push(someelevator);
 
 }); //end of elevatordata foreach
+
+//Initialize the building object in which the elevators are to operate.
+var buildingdata = {
+    'name':'Pittsburgh Tiny Skyscraper Co.',
+    'groundfloor':'0',
+    'floors':'31',
+    'yearbuilt':'2018'
+}
 
 //end of Initialization
 
@@ -96,12 +104,12 @@ app.get('/initialize', function (req, res) {
     }); //end of elevatordata foreach
 
     //send the relevant data as output
-    res.send(elevatordata);
+    res.send(elevators);
 });
 
 //This is the status endpoint for the API.  Here you get the status of all the relevant data points
 app.get('/status', function (req, res) {
-    res.send(elevatordata);
+    res.send(elevators);
 });
 
 //This is the single triprequest endpoint for the API.
